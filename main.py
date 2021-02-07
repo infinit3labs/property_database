@@ -1,5 +1,4 @@
 from get_search_results import get_non_new_home_urls
-from get_re_search_results import re_total_results
 from process_allhomes_data import *
 from send_email import *
 import tests
@@ -24,9 +23,6 @@ def main(test, source=None):
         for result_url in results:
             process_allhomes_data(result_url)
 
-    elif source == 6:
-        re_total_results()
-
     # Send out email with latest listings of the day (if any)
     latest_listings = get_email_data(date.today())
     if latest_listings:
@@ -39,4 +35,4 @@ def main(test, source=None):
     logging.info('End.')
 
 
-main(test=tests.url, source=6)
+main(test=tests.url, source=1)
