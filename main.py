@@ -13,7 +13,7 @@ def main(test, source=None):
 
     if test and source == 1:
         logging.info('Allhomes TEST')
-        results = get_non_new_home_urls()
+        results = [test]
         for result_url in results:
             process_allhomes_data(result_url)
 

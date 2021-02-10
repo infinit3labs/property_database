@@ -8,7 +8,8 @@ from allhomes_search_builder import get_search_page_url
 def total_results():
     # Gets the total results count of the search
     try:
-        f = urllib.request.urlopen(get_search_page_url())
+        url = get_search_page_url()
+        f = urllib.request.urlopen(url)
         page_data = f.read()
         html_doc = page_data
         soup = BeautifulSoup(html_doc, 'html.parser')
@@ -29,7 +30,7 @@ def get_search_page_data(page_num):
         html_doc = page_data
         soup = BeautifulSoup(html_doc, 'html.parser')
 
-        results = soup.find_all('div', 'allhomes-search-listing-card')
+        results = soup.find_all('div', 'css-1r6lu77')
 
         return results
     except HTTPError:
@@ -53,13 +54,13 @@ def get_non_new_home_urls():
             for result in all_results:
 
                 # This checks if the property is 'New Home' and excludes from final list
-                if len(result.find_all('span', 'css-1or6om')) > 0:
+                if len(result.find_all('a', 'css-1or6om')) > 0:
                     pass
                 else:
                     results_not_newhome.append(result)
 
         for match in results_not_newhome:
-            url = match.find_all('a', 'allhomes-search-listing-card__image')[0].attrs['href']
+            url = match.find_all('a', 'css-11fax8p')[0].attrs['href']
             property_list.append(url)
 
         return property_list

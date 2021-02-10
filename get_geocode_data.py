@@ -12,4 +12,8 @@ def get_geocode(formatted_add_str):
         geocode_result = gmaps.geocode('{}'.format(address))
     except googlemaps.exceptions.ApiError:
         return None
-    return geocode_result[0]['geometry']['location']
+    try:
+        result = geocode_result[0]['geometry']['location']
+    except IndexError:
+        result = None
+    return result
