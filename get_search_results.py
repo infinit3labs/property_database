@@ -54,7 +54,7 @@ def get_non_new_home_urls():
             for result in all_results:
 
                 # This checks if the property is 'New Home' and excludes from final list
-                if len(result.find_all('a', 'css-1or6om')) > 0:
+                if len(result.find_all('span', 'css-1or6om')) > 0:
                     pass
                 else:
                     results_not_newhome.append(result)
