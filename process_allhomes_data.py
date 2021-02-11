@@ -60,14 +60,14 @@ def process_allhomes_data(url):
                                               pid=listing_info['property_id'] or 9999,
                                               sid=source_id)
 
-        # Check if prop val in db, no get new data
-        logging.debug('Getting Property Value estimates data.')
-        propval_check = check_in_db(pid=property_id,
-                                    sid=5)
-        if propval_check == 1:
-            propval_estimates = None
-        else:
-            propval_estimates = get_prop_val_data(address)
+        # # Check if prop val in db, no get new data
+        # logging.debug('Getting Property Value estimates data.')
+        # propval_check = check_in_db(pid=property_id,
+        #                             sid=5)
+        # if propval_check == 1:
+        #     propval_estimates = None
+        # else:
+        #     propval_estimates = get_prop_val_data(address)
 
         # Update land values
         logging.debug('Updating land values details in database.')
@@ -233,19 +233,19 @@ def process_allhomes_data(url):
                                          name=key,
                                          value=value)
 
-        # Get estimate from Property Value
-        logging.debug('Updating Property Value estimates data in database.')
-        if propval_estimates:
-            for key, value in propval_estimates.items():
-                estimate_name = key.lower()
-                estimate_value = value
-                estimate_in_db = estimate_check_in_db(pid=property_id,
-                                                      sid=5,
-                                                      name=key)
-                if estimate_in_db:
-                    pass
-                else:
-                    estimate_write_to_db(pid=property_id,
-                                         sid=5,
-                                         name=key,
-                                         value=value)
+        # # Get estimate from Property Value
+        # logging.debug('Updating Property Value estimates data in database.')
+        # if propval_estimates:
+        #     for key, value in propval_estimates.items():
+        #         estimate_name = key.lower()
+        #         estimate_value = value
+        #         estimate_in_db = estimate_check_in_db(pid=property_id,
+        #                                               sid=5,
+        #                                               name=key)
+        #         if estimate_in_db:
+        #             pass
+        #         else:
+        #             estimate_write_to_db(pid=property_id,
+        #                                  sid=5,
+        #                                  name=key,
+        #                                  value=value)

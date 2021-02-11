@@ -17,8 +17,8 @@ def get_allhomes_listing_data(url):
         html_doc = page_data
         soup = BeautifulSoup(html_doc, 'html.parser')
         return soup
-    except HTTPError:
-        print('Query failed: {}'.format(url))
+    except HTTPError as e:
+        print('Query failed: {}: {}'.format(url, e))
         return None
 
 
@@ -32,7 +32,8 @@ def get_price(soup):
         # price_val = ''.join(map(str, price_nums))
         price = {'price': price_raw}
         return price
-    except IndexError:
+    except IndexError as e:
+        logging.warning('No price data available: {}'.format(e))
         return None
 
 
@@ -44,9 +45,12 @@ def get_listing_icon_data(soup):
 
     if listing_details:
         for i in listing_details:
-            _val = i.find_all('span')[0].text
-            _type = i.find_all('svg')[0].text
-            listing_details_data[_type] = _val
+            try:
+                _val = i.find_all('span')[0].text
+                _type = i.find_all('svg')[0].text
+                listing_details_data[_type] = _val
+            except IndexError as e:
+                logging.warning('Capture of icon data failed: {}'.format(e))
 
     if 'EER' in listing_details_data.keys():
         del listing_details_data['EER']
@@ -97,7 +101,8 @@ def get_current_listing_data(soup):
         current_sales_data['update_date'] = datetime.strptime(
             listing_info[update_date_loc + 11:update_date_loc + 21], '%d/%m/%Y'
         )
-    except IndexError:
+    except IndexError as e:
+        logging.warning('Property probably off the market now: {}'.format(e))
         return None
 
     return current_sales_data
@@ -125,6 +130,7 @@ def get_land_values(key_details_data):
     if land_values_data['uv'] and land_values_data['uv_year']:
         return land_values_data
     else:
+        logging.warning('Could not capture any land value data')
         return None
 
 
@@ -208,7 +214,12 @@ def get_address_data(soup, url):
                     str_nums.append(item)
             except ValueError:
                 pass
-    street_str = soup.find_all('h1', 'css-hed0vw')[0].text
+    try:
+        street_str = soup.find_all('h1', 'css-hed0vw')[0].text
+    except IndexError as e:
+        # Likely off the market
+        logging.warning('Could not get street info: {}'.format(e))
+        return None
     street_details = street_str.split(',')[0]
     street_details_list = street_details.split(' ')
     if street_details_list[0].lower() == 'unit':
@@ -305,6 +316,7 @@ def get_listing_dates(soup):
         auction_dt = datetime.strptime(auction_date_str, '%d/%m/%y')
         listing_dates_data['auction_dt'] = auction_dt
     else:
+        logging.warning('Could be issue with auction details on listing.')
         pass
 
     try:
@@ -314,7 +326,8 @@ def get_listing_dates(soup):
         listing_dates_data['next_inspection_dt'] = datetime.strptime(
             next_inspection_str, '%Y-%m-%dT%H:%M:%S'
         )
-    except IndexError:
+    except IndexError as e:
+        logging.warning('No next inspection date available: {}'.format(e))
         pass
 
     return listing_dates_data
@@ -329,13 +342,15 @@ def get_property_flags(soup):
     try:
         if soup.find_all('span', 'css-noxayc')[0].text == 'Offer':
             property_flags['has_offer'] = 'Y'
-    except IndexError:
+    except IndexError as e:
+        logging.info('Either no offer flag or css has failed; setting to N: {}'.format(e))
         property_flags['has_offer'] = 'N'
 
     try:
         if soup.find_all('span', 'css-14zapsz')[0].text == 'Sold':
             property_flags['is_sold'] = 'Y'
-    except IndexError:
+    except IndexError as e:
+        logging.info('Either no sale flag or css has failed; setting to N: {}'.format(e))
         property_flags['is_sold'] = 'N'
 
     try:
