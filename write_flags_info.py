@@ -73,7 +73,7 @@ def flag_details_changed(id, name, value):
         cursor.commit()
         cursor.close()
         cnxn.close()
-        flag_write_to_db(row[0], row[1], name, value)
+        flag_write_to_db(row[0], row[1], _new_name, _new_value)
 
 
 def flag_write_to_db(pid, sid, name, value):

@@ -71,7 +71,7 @@ def feature_details_changed(id, name, value):
         cursor.commit()
         cursor.close()
         cnxn.close()
-        feature_write_to_db(row[0], row[1], name, value)
+        feature_write_to_db(row[0], row[1], _new_name, _new_value)
 
 
 def feature_write_to_db(pid, sid, name, value):

@@ -226,7 +226,8 @@ def process_allhomes_data(url):
                                                       sid=2,
                                                       name=key)
                 if estimate_in_db:
-                    pass
+                    est_id = estimate_in_db
+                    flag_details_changed(flag_id, key, value)
                 else:
                     estimate_write_to_db(pid=property_id,
                                          sid=2,

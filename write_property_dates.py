@@ -71,7 +71,7 @@ def dates_details_changed(id, name, value):
         cursor.commit()
         cursor.close()
         cnxn.close()
-        dates_write_to_db(row[0], row[1], name, value)
+        dates_write_to_db(row[0], row[1], _new_name, _new_value)
 
 
 def dates_write_to_db(pid, sid, name, value):

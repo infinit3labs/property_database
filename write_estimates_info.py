@@ -8,7 +8,7 @@ def estimate_check_in_db(pid, sid, name):
 
     try:
         row = cursor.execute("""
-            select *
+            select id
             from (
             select id,
                    row_number() OVER (order by id desc) row_num
@@ -71,7 +71,7 @@ def estimate_details_changed(id, name, value):
         cursor.commit()
         cursor.close()
         cnxn.close()
-        estimate_write_to_db(row[0], row[1], name, value)
+        estimate_write_to_db(row[0], row[1], _new_name, _new_value)
 
 
 def estimate_write_to_db(pid, sid, name, value):
