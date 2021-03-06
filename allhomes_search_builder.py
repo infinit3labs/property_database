@@ -42,6 +42,7 @@ def get_search_page_url(page_num=1):
         'mawson-act-2607,' \
         'melba-act-2615,' \
         'o-connor-act-2602,' \
+        'pearce-act-2607,' \
         'phillip-act-2606,' \
         'reid-act-2612,' \
         'turner-act-2612,' \
