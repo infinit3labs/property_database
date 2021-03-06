@@ -13,7 +13,8 @@ def get_search_page_url(page_num=1):
         'greater-queanbeyan-queanbeyan-region-nsw,' \
         'south-canberra-act,' \
         'north-canberra-act,' \
-        'weston-creek-act' \
+        'weston-creek-act,' \
+        'woden-valley-act' \
         '&' \
         'suburb=' \
         'acton-act-2601,' \
