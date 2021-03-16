@@ -57,3 +57,6 @@ def get_search_page_url(page_num=1):
         '&' \
         'status=for-sale,under-offer,sold'.format(_page_num)
     return _search_url
+
+
+# print(get_search_page_url())

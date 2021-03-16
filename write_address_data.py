@@ -18,7 +18,7 @@ def get_existing_address_data(data):
                                state,
                                postcode,
                                row_number() OVER (ORDER BY id DESC) row_num
-                        FROM properties
+                        FROM property_listings.dbo.properties
                         WHERE unit_num = ?
                               AND street_num = ?
                               AND street_name = ?
@@ -63,7 +63,7 @@ def get_new_property_id(data, pid, sid):
     cursor = cnxn.cursor()
     try:
         cursor.execute("""
-        insert into properties (
+        insert into property_listings.dbo.properties (
             property_id,
             source_id,
             unit_num,
