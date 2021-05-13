@@ -311,13 +311,16 @@ def get_listing_dates(soup):
 
     # The auction date is in the price field
     price = soup.find_all('div', 'css-5xe854')[0].text
-    if price[:7].lower() == 'auction' and len(price.split(' ')[1]) == 8:
-        auction_date_str = price.split(' ')[1]
-        auction_dt = datetime.strptime(auction_date_str, '%d/%m/%y')
-        listing_dates_data['auction_dt'] = auction_dt
-    else:
-        logging.warning('Could be issue with auction details on listing.')
-        pass
+    try:
+        if price[:7].lower() == 'auction' and len(price.split(' ')[1]) == 8:
+            auction_date_str = price.split(' ')[1]
+            auction_dt = datetime.strptime(auction_date_str, '%d/%m/%y')
+            listing_dates_data['auction_dt'] = auction_dt
+        else:
+            logging.warning('Could be issue with auction details on listing.')
+            pass
+    except Exception as e:
+        logging.warning('Could be issue with auction details on listing: {}'.format(e))
 
     try:
         # This is taken from the RHS sidebar where the agent details are

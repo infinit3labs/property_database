@@ -80,7 +80,7 @@ def build_message(text, html):
             To(TO_EMAILS[0], TO_NAMES[0]),
             To(TO_EMAILS[1], TO_NAMES[1])
             ],
-        subject=Subject('Today''s Property Listings'),
+        subject=Subject("Today's Property Listings"),
         plain_text_content=PlainTextContent(text),
         html_content=HtmlContent(html)
     )
@@ -107,7 +107,7 @@ def send_message(text, html):
 # TESTS
 
 # text = 'and easy to do anywhere, even with Python'
-# test = get_email_data('2021-01-28')
+# test = get_email_data('2021-05-13')
 # if test:
 #     email_table = format_email_data(test)
 #     html = email_table
