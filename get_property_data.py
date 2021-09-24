@@ -88,7 +88,7 @@ def get_current_listing_data(soup):
 
     current_sales_data = {}
     try:
-        listing_info = soup.find_all('div', 'css-rklfmn')[0].text
+        listing_info = soup.find_all('div', 'css-mqbtts')[0].text
         current_sales_data['property_id'] = int(listing_info.split(': ')[1][:9])
         max_views_loc = listing_info.find('times') - 1
         min_views_loc = listing_info.find('viewed') + 7
@@ -144,8 +144,8 @@ def get_past_sales_data(soup):
 
     if prev_sales:
         for i in prev_sales:
-            sale_type = i.find_all('div', 'css-xscdvh')[0].text
-            price_str = i.find_all('div', 'css-a2p3z9')[0].text
+            sale_type = i.find_all('div', 'css-13it8mc')[0].text
+            price_str = i.find_all('div', 'css-wtlu8o')[0].text
             price_nums = []
             for ii in price_str:
                 if ii.isdigit():
@@ -194,7 +194,7 @@ def get_address_data(soup, url):
     # TODO: Probably don't need the url at all
     url_str_list = url.split('/')[-1].split('-')
     str_list_ex_pcode = url_str_list[:-1]
-    breadcrumbs = soup.find_all('a', 'css-6b5nzz')
+    breadcrumbs = soup.find_all('a', 'css-1tiqujk')
     breadcrumb_list = []
     for item in breadcrumbs:
         breadcrumb_list.append(item.text)
